@@ -1,0 +1,10 @@
+services:
+  localgov_events_date_search_api.index_items_subscriber:
+    class: Drupal\localgov_events_date_search_api\EventSubscriber\IndexItemsSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  localgov_events_date_search_api.process_results_subscriber:
+    class: Drupal\localgov_events_date_search_api\EventSubscriber\ResultsSubscriber
+    tags:
+      - { name: event_subscriber }

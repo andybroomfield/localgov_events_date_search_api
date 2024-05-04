@@ -1,0 +1,9 @@
+name: 'Localgov events date search api'
+type: module
+description: 'Include dates in events search'
+package: Localgov experimental
+core_version_requirement: ^10 || ^11
+dependencies:
+  - date_recur:date_recur
+  - localgov_events:localgov_events
+  - search_api:search_api
