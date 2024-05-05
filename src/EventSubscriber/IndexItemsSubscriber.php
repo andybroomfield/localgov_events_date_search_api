@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\localgov_events_date_search_api\EventSubscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Drupal\search_api\Event\SearchApiEvents;
 use Drupal\search_api\Event\IndexingItemsEvent;
+use Drupal\search_api\Event\SearchApiEvents;
 use Drupal\search_api\Utility\Utility;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @todo Add description for this subscriber.
@@ -36,9 +36,9 @@ final class IndexItemsSubscriber implements EventSubscriberInterface {
       return;
     }
     $items = $event->getItems();
-    foreach($items as $key => $item) {
-      list($datasource_type, $datasource_id) = Utility::splitCombinedId($key);
-      list($nid, $lang) = Utility::splitPropertyPath($datasource_id);
+    foreach ($items as $key => $item) {
+      [$datasource_type, $datasource_id] = Utility::splitCombinedId($key);
+      [$nid, $lang] = Utility::splitPropertyPath($datasource_id);
       $date_field = $item->getField('localgov_event_date');
       $date_end_field = $item->getField('localgov_event_date_end_value');
       $table_name = 'date_recur__node__localgov_event_date';
@@ -48,11 +48,11 @@ final class IndexItemsSubscriber implements EventSubscriberInterface {
         ->execute();
       $timestamps = [];
       $occurances = $result->fetchAll();
-      $timestamps = array_map(function($datetime) {
+      $timestamps = array_map(function ($datetime) {
         return strtotime($datetime);
       }, array_column($occurances, 'localgov_event_date_value'));
       $date_field->setValues($timestamps);
-      $end_timestamps = array_map(function($datetime) {
+      $end_timestamps = array_map(function ($datetime) {
         return strtotime($datetime);
       }, array_column($occurances, 'localgov_event_date_end_value'));
       $date_end_field->setValues($end_timestamps);

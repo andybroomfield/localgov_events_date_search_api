@@ -1,8 +1,15 @@
 <?php
 
-use Drupal\search_api\Entity\Index;
-use Drupal\Component\Serialization\Yaml;
+/**
+ * @file
+ */
 
+use Drupal\Component\Serialization\Yaml;
+use Drupal\search_api\Entity\Index;
+
+/**
+ *
+ */
 function localgov_events_date_search_api_install($is_syncing) {
   if ($is_syncing) {
     return;
@@ -11,7 +18,7 @@ function localgov_events_date_search_api_install($is_syncing) {
   $module_path = \Drupal::service('extension.list.module')->getPath('localgov_events_date_search_api');
   $replacement_config_path = $module_path . '/config/replace';
   $replacement_configs = array_diff(scandir($replacement_config_path), ['.', '..']);
-  foreach($replacement_configs as $replacement_config) {
+  foreach ($replacement_configs as $replacement_config) {
     $config_name = substr($replacement_config, 0, -4);
     $replacement_config_contents = Yaml::decode(file_get_contents($replacement_config_path . '/' . $replacement_config));
     \Drupal::configFactory()->getEditable($config_name)->setData($replacement_config_contents)->save();
