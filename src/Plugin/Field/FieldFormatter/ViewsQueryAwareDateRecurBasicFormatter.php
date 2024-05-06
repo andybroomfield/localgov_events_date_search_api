@@ -24,6 +24,9 @@ class ViewsQueryAwareDateRecurBasicFormatter extends DateRecurBasicFormatter {
    * {@inheritDoc}
    */
   protected function getOccurrences(DateRecurItem $item, $maxOccurrences): array {
+
+    // If the start is set in the query string (match events search view)
+    // then use that as the start date for the next instance.
     $start = new \DateTime(\Drupal::request()->query->get('start') ?? 'now');
     return $item->getHelper()
       ->getOccurrences($start, NULL, $maxOccurrences);

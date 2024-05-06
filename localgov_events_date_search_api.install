@@ -8,13 +8,14 @@ use Drupal\Component\Serialization\Yaml;
 use Drupal\search_api\Entity\Index;
 
 /**
- *
+ * Implements hook_install().
  */
 function localgov_events_date_search_api_install($is_syncing) {
   if ($is_syncing) {
     return;
   }
 
+  // Load up replacement configs and install them.
   $module_path = \Drupal::service('extension.list.module')->getPath('localgov_events_date_search_api');
   $replacement_config_path = $module_path . '/config/replace';
   $replacement_configs = array_diff(scandir($replacement_config_path), ['.', '..']);
@@ -24,6 +25,7 @@ function localgov_events_date_search_api_install($is_syncing) {
     \Drupal::configFactory()->getEditable($config_name)->setData($replacement_config_contents)->save();
   }
 
+  // Mark search api items for reindexing.
   $index = Index::load('localgov_events');
   if ($index) {
     $index->reindex();
