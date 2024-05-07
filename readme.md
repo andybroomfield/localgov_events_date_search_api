@@ -1,6 +1,6 @@
 # Localgov events dates in search api index
 
-Proof of concept support for reccuring dates in the [Localgov events][https://github.com/localgovdrupal/localgov_events] search.
+Proof of concept support for reccuring dates in the [Localgov events](https://github.com/localgovdrupal/localgov_events) search.
 
 __Caution : Experimental, not reccomended for use on production sites!__
 
